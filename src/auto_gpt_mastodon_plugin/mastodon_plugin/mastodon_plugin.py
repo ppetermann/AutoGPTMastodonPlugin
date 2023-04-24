@@ -13,7 +13,7 @@ def getClientSecret():
 def getEnvString(env_key: str):
     information = os.getenv(env_key)
     if not information:
-        return f"Error: toot not sent, {env_key} is not set in the environment (.env)"
+        raise Exception(f"Error: toot not sent, {env_key} is not set in the environment (.env)")
     return information
 
 
@@ -30,7 +30,10 @@ def getUser():
 
 
 def send_toot(content: str):
-    mastodon = Mastodon(client_id=getClientId(), client_secret=getClientSecret(), api_base_url=getMastodonHost())
-    mastodon.log_in(getUser(), getPwd(), scopes=['read', 'write'])
-    mastodon.toot(content)
+    try:
+        mastodon = Mastodon(client_id=getClientId(), client_secret=getClientSecret(), api_base_url=getMastodonHost())
+        mastodon.log_in(getUser(), getPwd(), scopes=['read', 'write'])
+        mastodon.toot(content)
+    except Exception as e:
+        return f"Error: toot not sent, {e}"
     return f"successfully tooted {content}!"
