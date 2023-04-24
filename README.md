@@ -3,6 +3,8 @@
 Simple Mastodon plugin for Auto-GPT. At this time it only supports posting to Mastodon, no reading. You will have to 
 manually register the account, as well as the app.
 
+USE AT YOUR OWN RISK
+
 ### Plugin Installation Steps
 
 1. **Clone or download the plugin repository:**
@@ -44,7 +46,8 @@ MASTODON_CLIENT_SECRET=
 to get the client_id and the client_secret, you will have to run a call to mastodons api,
 you can do this with curl:
 
-```curl -X POST \ 
+```shell
+    curl -X POST \ 
         -F 'client_name=Test Application' \
         -F 'redirect_uris=urn:ietf:wg:oauth:2.0:oob' \
         -F 'scopes=read write push' \
