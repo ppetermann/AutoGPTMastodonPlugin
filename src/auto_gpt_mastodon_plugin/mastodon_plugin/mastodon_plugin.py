@@ -33,7 +33,7 @@ def send_toot(content: str):
     try:
         mastodon = Mastodon(client_id=getClientId(), client_secret=getClientSecret(), api_base_url=getMastodonHost())
         mastodon.log_in(getUser(), getPwd(), scopes=['read', 'write'])
-        mastodon.toot(content)
+        toot = mastodon.toot(content)
     except Exception as e:
-        return f"Error: toot not sent, {e}"
-    return f"successfully tooted {content}!"
+        return f"Error: toot was not sent, {e}"
+    return f"toot was successfully sent, the url to the toot is: {toot.url}"
