@@ -1,38 +1,16 @@
 import os
 from mastodon import Mastodon
-
-
-def getClientId():
-    return getEnvString("MASTODON_CLIENT_ID")
-
-
-def getClientSecret():
-    return getEnvString("MASTODON_CLIENT_SECRET")
-
-
-def getEnvString(env_key: str):
-    information = os.getenv(env_key)
-    if not information:
-        raise Exception(f"Error: toot not sent, {env_key} is not set in the environment (.env)")
-    return information
-
-
-def getMastodonHost():
-    return getEnvString("MASTODON_HOST")
-
-
-def getPwd():
-    return getEnvString("MASTODON_PASSWORD")
-
-
-def getUser():
-    return getEnvString("MASTODON_USER")
+from .check_env import get_env_string
 
 
 def send_toot(content: str):
     try:
-        mastodon = Mastodon(client_id=getClientId(), client_secret=getClientSecret(), api_base_url=getMastodonHost())
-        mastodon.log_in(getUser(), getPwd(), scopes=['read', 'write'])
+        mastodon = Mastodon(
+            client_id=get_env_string('MASTODON_CLIENT_ID'),
+            client_secret=get_env_string('MASTODON_CLIENT_SECRET'),
+            api_base_url=get_env_string('MASTODON_HOST')
+        )
+        mastodon.log_in(get_env_string('MASTODON_USER'), get_env_string('MASTODON_PASSWORD'), scopes=['read', 'write'])
         toot = mastodon.toot(content)
     except Exception as e:
         return f"Error: toot was not sent, {e}"

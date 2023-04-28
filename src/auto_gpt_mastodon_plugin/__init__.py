@@ -2,6 +2,7 @@
 import abc
 from typing import Any, Dict, List, Optional, Tuple, TypeVar, TypedDict
 from auto_gpt_plugin_template import AutoGPTPluginTemplate
+from .mastodon_plugin.check_env import check_env
 
 PromptGenerator = TypeVar("PromptGenerator")
 
@@ -35,6 +36,9 @@ class AutoGPTMastodonPlugin(AutoGPTPluginTemplate):
         from .mastodon_plugin.mastodon_plugin import (
             send_toot
         )
+
+        if not check_env():
+            return prompt
 
         prompt.add_command(
             "Send Toot",
