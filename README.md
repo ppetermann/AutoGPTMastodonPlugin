@@ -56,4 +56,6 @@ you can do this with curl:
 ```
 the response should have the necessary credentials.
 
-the command for your agent to use is "send_toot", in my own experience, it works best if you actually tell it something like "send a toot saying..." instead of "please toot ..."
+the commands for your agent to use are
+ * "send_toot", in my own experience, it works best if you actually tell it something like "send a toot saying..." instead of "please toot ..."
+ * "check_mastodon_notifications" will check for new notifications, and if there are any, it will return a list of them, and mark them as read.

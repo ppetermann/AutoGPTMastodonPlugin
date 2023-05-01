@@ -34,7 +34,8 @@ class AutoGPTMastodonPlugin(AutoGPTPluginTemplate):
 
     def post_prompt(self, prompt: PromptGenerator) -> PromptGenerator:
         from .mastodon_plugin.mastodon_plugin import (
-            send_toot
+            send_toot,
+            check_mastodon_notifications
         )
 
         if not check_env():
@@ -46,6 +47,14 @@ class AutoGPTMastodonPlugin(AutoGPTPluginTemplate):
             {"content": "<content>"},
             send_toot,
         )
+
+        prompt.add_command(
+            "Check Mastodon Notifications",
+            "check_mastodon_notifications",
+            {},
+            check_mastodon_notifications
+        )
+
         return prompt
 
     def can_handle_on_planning(self) -> bool:
