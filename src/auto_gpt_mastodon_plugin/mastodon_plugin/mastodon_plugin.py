@@ -9,7 +9,7 @@ def get_client():
         client_secret=get_env_string('MASTODON_CLIENT_SECRET'),
         api_base_url=get_env_string('MASTODON_HOST')
     )
-    mastodon.log_in(get_env_string('MASTODON_USER'), get_env_string('MASTODON_PASSWORD'), scopes=['read', 'write']);
+    mastodon.log_in(get_env_string('MASTODON_USER'), get_env_string('MASTODON_PASSWORD'), scopes=['read', 'write'])
     return mastodon
 
 
@@ -19,6 +19,16 @@ def send_toot(content: str):
     except Exception as e:
         return f"Error: toot was not sent, {e}"
     return f"toot was successfully sent, the url to the toot is: {toot.url}"
+
+
+def reply_to_toot(content: str, toot_id: str):
+    try:
+        client = get_client()
+        original_toot = client.status(toot_id)
+        toot = get_client().status_reply(original_toot, content)
+    except Exception as e:
+        return f"Error: the reply was not sent, {e}"
+    return f"the reply was successfully sent, the url to the toot is: {toot.url}"
 
 
 def check_mastodon_notifications():
@@ -46,9 +56,9 @@ def parse_notifications(notifications):
         else:
             target = "us"
         item = f"Notification {notification['id']}:\n" \
-            f"The sender is {notification['account']['display_name']} with the Mastodon user id {notification['account']['acct']} " \
-            f"has {notification['type']} " \
-            f"{target} "
+               f"The sender is {notification['account']['display_name']} with the Mastodon user id {notification['account']['acct']} " \
+               f"has {notification['type']} " \
+               f"{target} "
 
         parsed.append(item)
     return parsed

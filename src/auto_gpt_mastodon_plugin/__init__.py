@@ -35,7 +35,8 @@ class AutoGPTMastodonPlugin(AutoGPTPluginTemplate):
     def post_prompt(self, prompt: PromptGenerator) -> PromptGenerator:
         from .mastodon_plugin.mastodon_plugin import (
             send_toot,
-            check_mastodon_notifications
+            check_mastodon_notifications,
+            reply_to_toot
         )
 
         if not check_env():
@@ -48,12 +49,36 @@ class AutoGPTMastodonPlugin(AutoGPTPluginTemplate):
             send_toot,
         )
 
+        # TODO: investigate better way to allow for command aliases
+        prompt.add_command(
+            "toot",
+            "send_toot",
+            {"content": "<content>"},
+            send_toot,
+        )
+
+        prompt.add_command(
+            "reply to toot",
+            "reply_to_toot",
+            {"content": "<content>", "tood_id": "<toot_id>"},
+            reply_to_toot,
+        )
+
+        prompt.add_command(
+            "reply to mastodon mention",
+            "reply_to_toot",
+            {"content": "<content>", "tood_id": "<toot_id>"},
+            reply_to_toot,
+        )
+
+
         prompt.add_command(
             "Check Mastodon Notifications",
             "check_mastodon_notifications",
             {},
             check_mastodon_notifications
         )
+
 
         return prompt
 

@@ -57,5 +57,8 @@ you can do this with curl:
 the response should have the necessary credentials.
 
 the commands for your agent to use are
- * "send_toot", in my own experience, it works best if you actually tell it something like "send a toot saying..." instead of "please toot ..."
+ * "send_toot", in my own experience, it works best if you actually tell it something like "`send a toot saying...`" instead of "please toot ..."
  * "check_mastodon_notifications" will check for new notifications, and if there are any, it will return a list of them, and mark them as read.
+ * "reply_to_toot", will reply to a toot, needs the id of the toot it replies to. Using this can look like
+   * `reply to toot 123456789 saying hello world`
+   * `check your mastodon notifications and reply to any toot that mentions you`
