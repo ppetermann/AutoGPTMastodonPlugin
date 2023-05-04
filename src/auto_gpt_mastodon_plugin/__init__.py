@@ -36,7 +36,8 @@ class AutoGPTMastodonPlugin(AutoGPTPluginTemplate):
         from .mastodon_plugin.mastodon_plugin import (
             send_toot,
             check_mastodon_notifications,
-            reply_to_toot
+            reply_to_toot,
+            boost_toot
         )
 
         if not check_env():
@@ -60,17 +61,16 @@ class AutoGPTMastodonPlugin(AutoGPTPluginTemplate):
         prompt.add_command(
             "reply to toot",
             "reply_to_toot",
-            {"content": "<content>", "tood_id": "<toot_id>"},
+            {"content": "<content>", "toot_id": "<toot_id>"},
             reply_to_toot,
         )
 
         prompt.add_command(
             "reply to mastodon mention",
             "reply_to_toot",
-            {"content": "<content>", "tood_id": "<toot_id>"},
+            {"content": "<content>", "toot_id": "<toot_id>"},
             reply_to_toot,
         )
-
 
         prompt.add_command(
             "Check Mastodon Notifications",
@@ -79,6 +79,12 @@ class AutoGPTMastodonPlugin(AutoGPTPluginTemplate):
             check_mastodon_notifications
         )
 
+        prompt.add_command(
+            "Boost Toot",
+            "boost_toot",
+            {"toot_id": "<toot_id>"},
+            boost_toot
+        )
 
         return prompt
 
@@ -92,6 +98,7 @@ class AutoGPTMastodonPlugin(AutoGPTPluginTemplate):
 
     def can_handle_post_planning(self) -> bool:
         return False
+
     def post_planning(self, response: str) -> str:
         pass
 

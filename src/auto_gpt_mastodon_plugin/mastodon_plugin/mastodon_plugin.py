@@ -21,7 +21,7 @@ def send_toot(content: str):
     return f"toot was successfully sent, the url to the toot is: {toot.url}"
 
 
-def reply_to_toot(content: str, toot_id: str):
+def reply_to_toot(content: str, toot_id: int):
     try:
         client = get_client()
         original_toot = client.status(toot_id)
@@ -62,3 +62,13 @@ def parse_notifications(notifications):
 
         parsed.append(item)
     return parsed
+
+
+def boost_toot(toot_id: int):
+    try:
+        client = get_client()
+        original_toot = client.status(toot_id)
+        toot = get_client().status_reblog(original_toot)
+    except Exception as e:
+        return f"Error: the boost was not sent, {e}"
+    return f"the boost was successfully posted, the url to the new toot is: {toot.url}"

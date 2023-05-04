@@ -62,3 +62,6 @@ the commands for your agent to use are
  * "reply_to_toot", will reply to a toot, needs the id of the toot it replies to. Using this can look like
    * `reply to toot 123456789 saying hello world`
    * `check your mastodon notifications and reply to any toot that mentions you`
+ * "boost_toot", will boost/reblog a toot with the given id. Using this can look like
+   * `boost toot 123456789`
+   * `check your mastodon notifications and boost any toot that mentions you`
