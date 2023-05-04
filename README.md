@@ -65,3 +65,6 @@ the commands for your agent to use are
  * "boost_toot", will boost/reblog a toot with the given id. Using this can look like
    * `boost toot 123456789`
    * `check your mastodon notifications and boost any toot that mentions you`
+ * "favorite_toot" will favorite the toot given by toot_id, using this can look like
+   * `favorite toot 123456789`
+   * `check your mastodon notifications and favorite any toot that mentions you`

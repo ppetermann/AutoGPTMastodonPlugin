@@ -37,7 +37,8 @@ class AutoGPTMastodonPlugin(AutoGPTPluginTemplate):
             send_toot,
             check_mastodon_notifications,
             reply_to_toot,
-            boost_toot
+            boost_toot,
+            favorite_toot
         )
 
         if not check_env():
@@ -84,6 +85,13 @@ class AutoGPTMastodonPlugin(AutoGPTPluginTemplate):
             "boost_toot",
             {"toot_id": "<toot_id>"},
             boost_toot
+        )
+
+        prompt.add_command(
+            "favorite toot",
+            "favorite_toot",
+            {"toot_id": "<toot_id>"},
+            favorite_toot
         )
 
         return prompt

@@ -25,7 +25,7 @@ def reply_to_toot(content: str, toot_id: int):
     try:
         client = get_client()
         original_toot = client.status(toot_id)
-        toot = get_client().status_reply(original_toot, content)
+        toot = client.status_reply(original_toot, content)
     except Exception as e:
         return f"Error: the reply was not sent, {e}"
     return f"the reply was successfully sent, the url to the toot is: {toot.url}"
@@ -68,7 +68,15 @@ def boost_toot(toot_id: int):
     try:
         client = get_client()
         original_toot = client.status(toot_id)
-        toot = get_client().status_reblog(original_toot)
+        toot = client.status_reblog(original_toot)
     except Exception as e:
         return f"Error: the boost was not sent, {e}"
     return f"the boost was successfully posted, the url to the new toot is: {toot.url}"
+
+
+def favorite_toot(toot_id: int):
+    try:
+        toot = get_client().status_favourite(toot_id)
+    except Exception as e:
+        return f"Error: the toot was not made a favorite: {e}"
+    return f"the the toot was successfully made a favorite: {toot.url}"
